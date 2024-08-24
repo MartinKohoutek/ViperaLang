@@ -92,6 +92,7 @@ public class Scanner {
 
         if (isAtEnd()) {
             Vipera.error(line, "Unterminated string.");
+            return;
         }
 
         advance();         // The closing ".
