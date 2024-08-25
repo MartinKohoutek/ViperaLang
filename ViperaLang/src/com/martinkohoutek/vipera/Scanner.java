@@ -74,7 +74,13 @@ public class Scanner {
             indent++;
         }
 
+        if (indent == 0) {
+            return;
+        }
         if (indent > currentIndent) {
+            if (!indentStack.isEmpty() && indent != indentStack.peek() + 4) {
+                Vipera.error(line, "Unexpected indentation level at line " + line);
+            }
             addToken(INDENT);
             indentStack.push(indent);
             currentIndent = indent;
@@ -85,6 +91,7 @@ public class Scanner {
 
     private void handleNewline() {
         line++;
+        addToken(NEWLINE);
         if (!isAtEnd()) {
             char nextChar = peek();
             if (nextChar == ' ') {
@@ -98,10 +105,18 @@ public class Scanner {
 
     private void checkDedent(int indent) {
         while (!indentStack.isEmpty() && indent < indentStack.peek()) {
-            System.out.println("CHECK: " + indent + ":" + indentStack.peek() + ":" + indentStack.isEmpty());
+            if (indent % 4 != 0) {
+                Vipera.error(line, "Unexpected dedentation at line " + line);
+            }
+
             indentStack.pop();
             addToken(DEDENT);
         }
+
+        if (indent < indentStack.peek()) {
+            Vipera.error(line, "Unexpected dedentation at line " + line);
+        }
+
         currentIndent = indent;
     }
 
@@ -123,8 +138,7 @@ public class Scanner {
     }
 
     private char peek() {
-        if (isAtEnd()) return '\0';
-        return source.charAt(current);
+        return isAtEnd() ? '\0' : source.charAt(current);
     }
 
     private void string() {

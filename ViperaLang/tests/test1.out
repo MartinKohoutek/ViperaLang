@@ -1,10 +1,14 @@
 LPAREN ( null
 RPAREN ) null
+NEWLINE 
+ null
 IDENTIFIER def null
 IDENTIFIER greet null
 LPAREN ( null
 RPAREN ) null
 COLON : null
+NEWLINE 
+ null
 INDENT      null
 IDENTIFIER print null
 LPAREN ( null

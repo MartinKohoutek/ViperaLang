@@ -3,19 +3,25 @@ IDENTIFIER greet null
 LPAREN ( null
 RPAREN ) null
 COLON : null
+NEWLINE 
+ null
 INDENT      null
 IDENTIFIER print null
 LPAREN ( null
 STRING "Hello World!" Hello World!
 RPAREN ) null
+NEWLINE 
+ null
 IDENTIFIER if null
-DEDENT   null
 IDENTIFIER True null
 COLON : null
+NEWLINE 
+ null
 INDENT          null
 IDENTIFIER print null
 LPAREN ( null
 STRING "Nested block" Nested block
 RPAREN ) null
+DEDENT ) null
 DEDENT ) null
 EOF  null

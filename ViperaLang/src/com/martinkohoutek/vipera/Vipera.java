@@ -18,7 +18,7 @@ public class Vipera {
         } else if (args.length == 1) {
             runFile(args[0]);
         } else {
-            runFile("tests/test2.in");
+            runFile("tests/test5.in");
 //            runPrompt();
         }
     }

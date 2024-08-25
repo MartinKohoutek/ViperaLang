@@ -12,7 +12,7 @@ public enum TokenType {
     // LESS, LESS_EQUAL,
 
     // Special tokens
-    INDENT, DEDENT,
+    INDENT, DEDENT, NEWLINE,
 
     // Literals
     IDENTIFIER, STRING, INT,
