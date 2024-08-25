@@ -1,0 +1,14 @@
+LPAREN ( null
+RPAREN ) null
+IDENTIFIER def null
+IDENTIFIER greet null
+LPAREN ( null
+RPAREN ) null
+COLON : null
+INDENT      null
+IDENTIFIER print null
+LPAREN ( null
+STRING "Hello World!" Hello World!
+RPAREN ) null
+DEDENT ) null
+EOF  null

@@ -1,0 +1,29 @@
+IDENTIFIER def null
+IDENTIFIER greet null
+LPAREN ( null
+RPAREN ) null
+COLON : null
+INDENT      null
+IDENTIFIER if null
+DEDENT   null
+IDENTIFIER True null
+COLON : null
+INDENT          null
+IDENTIFIER print null
+LPAREN ( null
+STRING "Inside if" Inside if
+RPAREN ) null
+IDENTIFIER else null
+COLON : null
+DEDENT    null
+INDENT          null
+IDENTIFIER print null
+LPAREN ( null
+STRING "Inside else" Inside else
+RPAREN ) null
+DEDENT null
+IDENTIFIER print null
+LPAREN ( null
+STRING "Outside if-else" Outside if-else
+RPAREN ) null
+EOF  null

@@ -1,0 +1,4 @@
+def greet():
+    if True:
+        print("Correctly indented")
+    print("Incorrectly indented")

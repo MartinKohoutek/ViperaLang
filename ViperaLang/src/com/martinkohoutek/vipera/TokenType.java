@@ -6,10 +6,10 @@ public enum TokenType {
     COMMA, COLON, DOT, MINUS, PLUS, SLASH, STAR,
 
     // One or two character tokens
-    NOT_EQUAL,
-    EQUAL, EQUAl_EQUAL,
-    GREATER, GREATER_EQUAL,
-    LESS, LESS_EQUAL,
+    // NOT_EQUAL,
+    // EQUAL, EQUAl_EQUAL,
+    // GREATER, GREATER_EQUAL,
+    // LESS, LESS_EQUAL,
 
     // Special tokens
     INDENT, DEDENT,
@@ -18,7 +18,7 @@ public enum TokenType {
     IDENTIFIER, STRING, INT,
 
     // Keywords
-    IF, ELIF, ELSE, PASS, PRINT, WHILE,
+    // IF, ELIF, ELSE, PASS, PRINT, WHILE,
 
     EOF
 }

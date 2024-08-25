@@ -1,0 +1,6 @@
+def greet():
+    print("Hello World!")
+    if True:
+        print("Nested block")
+        if False:
+            print("Deeply nested block")

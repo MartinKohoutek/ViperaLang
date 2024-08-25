@@ -2,6 +2,7 @@ package com.martinkohoutek.vipera;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 import static com.martinkohoutek.vipera.TokenType.*;
 
@@ -11,24 +12,31 @@ public class Scanner {
     private int start = 0;
     private int current = 0;
     private int line = 1;
+    private int currentIndent = 0;
+    private final Stack<Integer> indentStack = new Stack<>();
 
     Scanner(String source) {
         this.source = source;
+        indentStack.push(0);
     }
 
     List<Token> scanTokens() {
         while (!isAtEnd()) {
-            // We are at the beginning of the next lexeme
             start = current;
             scanToken();
         }
 
-        tokens.add(new Token(EOF, "", null, line));     // End of Stream
+        while (indentStack.size() > 1) {
+            indentStack.pop();
+            addToken(DEDENT);
+        }
+
+        tokens.add(new Token(EOF, "", null, line));
         return tokens;
     }
 
     private void scanToken() {
-        char c = advance();         // next char
+        char c = advance();
         switch (c) {
             case '(': addToken(LPAREN); break;
             case ')': addToken(RPAREN); break;
@@ -41,25 +49,60 @@ public class Scanner {
             case ':': addToken(COLON); break;
             case '*': addToken(STAR); break;
             case '/': addToken(SLASH); break;
-
             case '#': while (peek() != '\n' && !isAtEnd()) advance(); break;
-
-            case ' ':
+            case '\n': handleNewline(); break;
+            case ' ':  handleIndent(); break;
             case '\r':
-            case '\t':
-                break;      // Ignore white space
-            case '\n': line++; break;
-
+            case '\t': break;
             case '"': string(); break;
-
             default:
                 if (isDigit(c)) {
                     number();
+                } else if (isAlpha(c)) {
+                    identifier();
                 } else {
-                    Vipera.error(line, "Unexpected character");
+                    Vipera.error(line, "Unexpected character: " + c);
                 }
                 break;
         }
+    }
+
+    private void handleIndent() {
+        int indent = 0;
+        while (peek() == ' ') {
+            advance();
+            indent++;
+        }
+
+        if (indent > currentIndent) {
+            addToken(INDENT);
+            indentStack.push(indent);
+            currentIndent = indent;
+        } else if (indent < currentIndent) {
+            checkDedent(indent);
+        }
+    }
+
+    private void handleNewline() {
+        line++;
+        if (!isAtEnd()) {
+            char nextChar = peek();
+            if (nextChar == ' ') {
+                start = current;
+                handleIndent();
+            } else if (nextChar == '\n' || nextChar == '\r' || nextChar == '\t') {
+                advance();
+            }
+        }
+    }
+
+    private void checkDedent(int indent) {
+        while (!indentStack.isEmpty() && indent < indentStack.peek()) {
+            System.out.println("CHECK: " + indent + ":" + indentStack.peek() + ":" + indentStack.isEmpty());
+            indentStack.pop();
+            addToken(DEDENT);
+        }
+        currentIndent = indent;
     }
 
     private boolean isAtEnd() {
@@ -95,9 +138,7 @@ public class Scanner {
             return;
         }
 
-        advance();         // The closing ".
-
-        // Trim trailing ""
+        advance();
         String value = source.substring(start + 1, current - 1);
         addToken(STRING, value);
     }
@@ -108,7 +149,21 @@ public class Scanner {
 
     private void number() {
         while (isDigit(peek())) advance();
-
         addToken(INT, Integer.parseInt(source.substring(start, current)));
+    }
+
+    private void identifier() {
+        while (isAlphaNumeric(peek())) advance();
+        addToken(IDENTIFIER);
+    }
+
+    private boolean isAlpha(char c) {
+        return (c >= 'a' && c <= 'z') ||
+                (c >= 'A' && c <= 'Z') ||
+                c == '_';
+    }
+
+    private boolean isAlphaNumeric(char c) {
+        return isAlpha(c) || isDigit(c);
     }
 }

@@ -1,0 +1,21 @@
+IDENTIFIER def null
+IDENTIFIER greet null
+LPAREN ( null
+RPAREN ) null
+COLON : null
+INDENT      null
+IDENTIFIER if null
+DEDENT   null
+IDENTIFIER True null
+COLON : null
+INDENT          null
+IDENTIFIER print null
+LPAREN ( null
+STRING "Correctly indented" Correctly indented
+RPAREN ) null
+DEDENT      null
+IDENTIFIER print null
+LPAREN ( null
+STRING "Incorrectly indented" Incorrectly indented
+RPAREN ) null
+EOF  null

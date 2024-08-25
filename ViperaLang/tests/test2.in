@@ -1,0 +1,4 @@
+def greet():
+    print("Hello World!")
+    if True:
+        print("Nested block")

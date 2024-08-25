@@ -1,0 +1,6 @@
+def greet():
+    if True:
+        print("Inside if")
+    else:
+        print("Inside else")
+    print("Outside if-else")
